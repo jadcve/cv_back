@@ -29,11 +29,12 @@ public class PersonalData {
     
     private String lastName;
 
+    private String countryDocument;
+
+    private String documentIdentity;
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-
 }
