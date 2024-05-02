@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -43,7 +44,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         try {
             user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-            username = user.getUsername();
+            username = user.getEmail();
             password = user.getPassword();
         } catch (StreamReadException e) {
             e.printStackTrace();
@@ -86,7 +87,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Map<String, String> body = new HashMap<>();
         body.put("token", token);
         body.put("username", username);
-        // body.put("message", String.format("Hola %s has iniciado sesion con exito!", username));
+        body.put("message", String.format("Hola %s has iniciado sesion con exito!", username));
       
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));

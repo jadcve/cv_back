@@ -28,9 +28,7 @@ public class KnowledgeData {
     private String program;
     private String level;
     private Integer years;
-    
 
-    
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
