@@ -13,10 +13,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,33 +32,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "El email es requerido")
+    @Email(message = "El formato del correo debe ser válido")
     @Column(unique = true)
     private String email;
     
-    @NotEmpty
+    @NotEmpty(message = "La contraseña es requerida")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
-
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "personal_data_id", referencedColumnName = "id")
-    // private PersonalData personalData;
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn(name = "contact_data_id", referencedColumnName = "id")
-    // private ContactData contactData;
-    
-    // @JsonManagedReference
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<ExperienceData> experiences;
-    
-    // @JsonManagedReference
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private List<KnowledgeData> knowledge;
 
     @JsonIgnore
     @Embedded
     private Audit audit;
+
+    
+    @JsonIgnore
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ExperienceData> experiences;
+    
+    @JsonIgnore
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<KnowledgeData> knowledge;
 
 }

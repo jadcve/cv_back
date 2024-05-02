@@ -1,9 +1,9 @@
 package com.alain.cv.cv.services;
 
-import com.alain.cv.cv.dto.UserDto;
+import com.alain.cv.cv.entities.User;
 
 public interface UserService {
 
-    UserDto registerUser(UserDto userDto);
+    User registerUser(User dataUsuUser);
 
 }

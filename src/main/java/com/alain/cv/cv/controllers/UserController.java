@@ -11,12 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alain.cv.cv.dto.UserDto;
+import com.alain.cv.cv.entities.User;
 import com.alain.cv.cv.services.impl.UserServiceImp;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -32,13 +32,13 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDto userDto, BindingResult result) {
-        log.info("Received user data: {}", userDto);
-        if (result.hasFieldErrors()) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User  dataUsuario, BindingResult result) {
+        log.info("Received user data: {}", dataUsuario); 
+        if (result.hasErrors()) {
             return validation(result);
         }
-        UserDto registerUser = userServiceImp.registerUser(userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registerUser);
+        User registeredUser = userServiceImp.registerUser(dataUsuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 
 

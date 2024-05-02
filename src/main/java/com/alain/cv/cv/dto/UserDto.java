@@ -21,4 +21,12 @@ public class UserDto {
     private String password;
 
     private Audit audit;
+
+    public Long getUserId() {
+        return id;
+    }
+
+    public void setUserId(Long id) {
+        this.id = id;
+    }
 }

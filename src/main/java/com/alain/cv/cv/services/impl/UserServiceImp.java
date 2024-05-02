@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import com.alain.cv.cv.services.UserService;
 
 import jakarta.transaction.Transactional;
-
-import com.alain.cv.cv.dto.UserDto;
 import com.alain.cv.cv.entities.Audit;
 import com.alain.cv.cv.entities.User;
 import com.alain.cv.cv.repositories.UserRepository;
@@ -30,17 +28,12 @@ public class UserServiceImp implements UserService{
 
     @Transactional
     @Override
-    public UserDto registerUser(UserDto userDto) {
+    public User registerUser(User dataUsu) {
         User usuario = new User();
-        usuario.setEmail(userDto.getEmail());
-        usuario.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        usuario.setEmail(dataUsu.getEmail());
+        usuario.setPassword(passwordEncoder.encode(dataUsu.getPassword()));
         usuario.setAudit(new Audit());
-        User savedUser = userRepository.save(usuario);
-
-        UserDto userDtoSaved = new UserDto();
-        userDtoSaved.setId(savedUser.getId());
-        userDtoSaved.setEmail(savedUser.getEmail());
-        return userDtoSaved;
+        return  userRepository.save(usuario);
 
       
     }
