@@ -45,8 +45,8 @@ public class PersonalDataController {
         return ResponseEntity.ok(personalData);
     }
 
-    @PutMapping("update")
-    public ResponseEntity<?> putMethodName(@Valid @RequestBody PersonalData pData, BindingResult result) {
+    @PutMapping("/update")
+    public ResponseEntity<?> updatePersonalData(@Valid @RequestBody PersonalData pData, BindingResult result) {
         if (result.hasFieldErrors()) {
             return validation(result);
         }
@@ -64,17 +64,14 @@ public class PersonalDataController {
         return ResponseEntity.ok(personalData);
     }
 
-    @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<?> deletePersonalData(@PathVariable Long userId) {
-        try {
-            personalDataServiceImp.delete(userId);
-            return ResponseEntity.ok().build();  
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();  
-        }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteContactData(@RequestBody Map<String, Long> body) {
+        Long id = body.get("id");
+        personalDataServiceImp.delete(id);
+        return ResponseEntity.ok().build();
     }
 
-
+    
     private ResponseEntity<?> validation(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
 
@@ -83,7 +80,5 @@ public class PersonalDataController {
         });
         return ResponseEntity.badRequest().body(errors);
     }
-
-
 
 }

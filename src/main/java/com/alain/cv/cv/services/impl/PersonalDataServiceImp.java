@@ -38,10 +38,7 @@ public class PersonalDataServiceImp implements PersonalDataService{
         return personalDataRepository.save(personalData);
     }
 
-     
-
     @Transactional
-    @Override
     public PersonalData updatePersonalData(PersonalData pData) {
         PersonalData existingData = personalDataRepository.findById(pData.getId())
         .orElseThrow();
@@ -54,8 +51,7 @@ public class PersonalDataServiceImp implements PersonalDataService{
         return personalDataRepository.save(existingData);
     }
 
-    
-     @Override
+    @Transactional
     public void delete(Long id) {
         if (!personalDataRepository.existsById(id)) {
             throw new EntityNotFoundException("PersonalData not found with id: " + id);
